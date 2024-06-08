@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.example.EcoChargerStation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class EcoChargerStationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(EcoChargerStationApplication.class, args);
 	}
 
 }
