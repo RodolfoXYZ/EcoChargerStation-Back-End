@@ -1,16 +1,21 @@
-FROM ubuntu:latest AS build
+# Etapa de construção
+FROM maven:3.8.5-openjdk-17-slim AS build
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
+# Copiar o código-fonte para a imagem
+COPY . /app
+WORKDIR /app
 
-RUN apt-get install maven -y
-RUN mvn clean install 
+# Executar a build usando Maven
+RUN mvn clean install
 
+# Etapa final
 FROM openjdk:17-jdk-slim
 
+# Expor a porta 8080
 EXPOSE 8080
 
-COPY --from=build /target/deploy_render-1.0.0.jar app.jar
+# Copiar o artefato construído da etapa anterior
+COPY --from=build /app/target/deploy_render-1.0.0.jar app.jar
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+# Comando de inicialização
+ENTRYPOINT ["java", "-jar", "app.jar"]
