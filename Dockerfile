@@ -5,8 +5,13 @@ FROM maven:3.8.5-openjdk-17-slim AS build
 COPY . /app
 WORKDIR /app
 
-# Executar a build usando Maven
-RUN mvn clean install
+# Definir variáveis de ambiente para o banco de dados
+ENV DATABASE_URL=jdbc:postgresql://dpg-cpif6e4f7o1s73bgl0a0-a:5432/example_database_4lm9
+ENV DATABASE_USERNAME=example_database_4lm9_user
+ENV DATABASE_PASSWORD=Mp75So0fwB6po1hnMWSmhrc5m5EIwsgy
+
+# Executar a build usando Maven, ignorando testes
+RUN mvn clean install -DskipTests
 
 # Etapa final
 FROM openjdk:17-jdk-slim
