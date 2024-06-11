@@ -49,6 +49,4 @@ public class VehicleController {
             return ResponseEntity.badRequest().body(new ErrorBody(HttpStatus.BAD_REQUEST.name(), e.getMessage()));
         }
     }
-
-
 }

@@ -2,11 +2,14 @@ package com.example.EcoChargerStation.Repository.ConcreteRepositories;
 import com.example.EcoChargerStation.Dtos.CreateStationDTO;
 import com.example.EcoChargerStation.Models.Client;
 import com.example.EcoChargerStation.Models.Station;
+import com.example.EcoChargerStation.Models.Vehicle;
 import com.example.EcoChargerStation.Repository.interfaces.IStationRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class StationRepository implements IStationRepository {
@@ -39,5 +42,18 @@ public class StationRepository implements IStationRepository {
 
         String jpql = "FROM Station c WHERE c.id = :id";
         return (Station) em.createQuery(jpql).setParameter("id", id).getSingleResult();
+    }
+
+    @Override
+    public void DeleteStation(long id) {
+        String jpql = "DELETE Station c WHERE c.stationId = :id";
+        em.createQuery(jpql).setParameter("id", id).executeUpdate();
+    }
+
+    @Override
+    public List<Station> getAllById(long id) {
+        return em.createQuery("SELECT v FROM Station v WHERE supplierId = :id", Station.class)
+                .setParameter("id", id)
+                .getResultList();
     }
 }
